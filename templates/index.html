@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkillReady - Job Readiness & Skill Gap Analyzer</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">SkillReady</div>
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+
+        <h1>Job Readiness & Skill Gap Analyzer</h1>
+
+        <p>
+            Discover your skills, identify your skill gaps,
+            and prepare yourself for your professional career.
+        </p>
+
+        <button onclick="startAssessment()">
+            Start Skill Assessment
+        </button>
+
+    </section>
+
+
+    <!-- Features -->
+    <section id="skills" class="features">
+
+        <h2>What Can You Do?</h2>
+
+        <div class="card-container">
+
+            <div class="card">
+                <div class="icon">💻</div>
+                <h3>Assess Your Skills</h3>
+                <p>Check your current technical skills.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🔍</div>
+                <h3>Find Skill Gaps</h3>
+                <p>Identify the skills you need to improve.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">📚</div>
+                <h3>Learning Recommendations</h3>
+                <p>Get suggestions for improving your skills.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🎤</div>
+                <h3>Interview Preparation</h3>
+                <p>Practice important technical interview questions.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Student Details -->
+    <section class="student-details">
+
+        <h2>Student Details</h2>
+
+        <div class="details-form">
+
+            <label for="studentName">
+                Student Name
+            </label>
+
+            <input
+                type="text"
+                id="studentName"
+                placeholder="Enter your name"
+            >
+
+            <label for="studentCourse">
+                Course
+            </label>
+
+            <input
+                type="text"
+                id="studentCourse"
+                placeholder="Enter your course"
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- Assessment Section -->
+    <section id="assessment" class="assessment">
+
+        <h2>Skill Assessment</h2>
+
+        <p>Select the skills you already know:</p>
+
+        <div class="skills-list">
+
+            <label>
+                <input type="checkbox" value="HTML">
+                HTML
+            </label>
+
+            <label>
+                <input type="checkbox" value="CSS">
+                CSS
+            </label>
+
+            <label>
+                <input type="checkbox" value="JavaScript">
+                JavaScript
+            </label>
+
+            <label>
+                <input type="checkbox" value="Python">
+                Python
+            </label>
+
+            <label>
+                <input type="checkbox" value="Java">
+                Java
+            </label>
+
+            <label>
+                <input type="checkbox" value="SQL">
+                SQL
+            </label>
+
+            <label>
+                <input type="checkbox" value="PHP">
+                PHP
+            </label>
+
+            <label>
+                <input type="checkbox" value="Git">
+                Git / GitHub
+            </label>
+
+            <label>
+                <input type="checkbox" value="Database">
+                Database
+            </label>
+
+            <label>
+                <input type="checkbox" value="Cloud">
+                Cloud Basics
+            </label>
+
+        </div>
+
+
+        <div class="assessment-buttons">
+
+            <button onclick="analyzeSkills()">
+                Analyze My Skills
+            </button>
+
+            <button onclick="location.reload()">
+                Reset Assessment
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Result -->
+    <div id="result"></div>
+
+
+    <!-- About -->
+    <section id="about" class="about">
+
+        <h2>About SkillReady</h2>
+
+        <p>
+            SkillReady is a career readiness platform designed to help
+            students understand their technical skills, identify skill gaps,
+            receive learning recommendations, and prepare for interviews.
+        </p>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>
+            © 2026 SkillReady | Job Readiness & Skill Gap Analyzer
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        function startAssessment() {
+
+            document.getElementById("assessment").scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+
+        function analyzeSkills() {
+
+            const studentName =
+                document.getElementById("studentName").value.trim();
+
+            const studentCourse =
+                document.getElementById("studentCourse").value.trim();
+
+
+            if (studentName === "" || studentCourse === "") {
+
+                alert(
+                    "Please enter your name and course before starting the assessment."
+                );
+
+                return;
+
+            }
+
+
+            const checkboxes =
+                document.querySelectorAll(
+                    '#assessment input[type="checkbox"]'
+                );
+
+
+            let selectedSkills = [];
+
+
+            checkboxes.forEach(function (checkbox) {
+
+                if (checkbox.checked) {
+
+                    selectedSkills.push(checkbox.value);
+
+                }
+
+            });
+
+
+            const allSkills = [
+
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Python",
+                "Java",
+                "SQL",
+                "PHP",
+                "Git",
+                "Database",
+                "Cloud"
+
+            ];
+
+
+            const missingSkills =
+                allSkills.filter(
+                    skill => !selectedSkills.includes(skill)
+                );
+
+
+            const score =
+                Math.round(
+                    (selectedSkills.length / allSkills.length) * 100
+                );
+
+
+            let level = "";
+
+
+            if (score <= 40) {
+
+                level = "Beginner";
+
+            } else if (score <= 70) {
+
+                level = "Intermediate";
+
+            } else {
+
+                level = "Advanced";
+
+            }
+
+
+            let readinessMessage = "";
+
+
+            if (score >= 80) {
+
+                readinessMessage =
+                    "Excellent! You have a strong technical foundation and are well prepared for professional opportunities.";
+
+            } else if (score >= 60) {
+
+                readinessMessage =
+                    "Good progress! Continue improving your skills and start working on practical projects.";
+
+            } else if (score >= 40) {
+
+                readinessMessage =
+                    "You are making progress. Focus on improving your missing skills and gaining practical experience.";
+
+            } else {
+
+                readinessMessage =
+                    "Keep learning and practicing. Building a strong foundation will improve your job readiness.";
+
+            }
+
+
+            let careerRecommendation = "";
+
+
+            if (score <= 40) {
+
+                careerRecommendation =
+                    "Focus on learning the basics and building small projects.";
+
+            } else if (score <= 70) {
+
+                careerRecommendation =
+                    "Start building projects and prepare for internships.";
+
+            } else {
+
+                careerRecommendation =
+                    "You are ready to focus on advanced projects and job opportunities.";
+
+            }
+
+
+            /*
+             * CAREER SUGGESTIONS
+             */
+
+            let careerSuggestions = [];
+
+
+            if (
+                selectedSkills.includes("HTML") &&
+                selectedSkills.includes("CSS")
+            ) {
+
+                careerSuggestions.push(
+                    "💻 Web Developer"
+                );
+
+            }
+
+
+            if (
+                selectedSkills.includes("JavaScript")
+            ) {
+
+                careerSuggestions.push(
+                    "🌐 Front-End Developer"
+                );
+
+            }
+
+
+            if (
+                selectedSkills.includes("Python")
+            ) {
+
+                careerSuggestions.push(
+                    "🐍 Python Developer"
+                );
+
+            }
+
+
+            if (
+                selectedSkills.includes("Java")
+            ) {
+
+                careerSuggestions.push(
+                    "☕ Java Developer"
+                );
+
+            }
+
+
+            if (
+                selectedSkills.includes("SQL") ||
+                selectedSkills.includes("Database")
+            ) {
+
+                careerSuggestions.push(
+                    "🗄️ Database / SQL Developer"
+                );
+
+            }
+
+
+            if (
+                selectedSkills.includes("PHP")
+            ) {
+
+                careerSuggestions.push(
+                    "🔧 PHP Web Developer"
+                );
+
+            }
+
+
+            if (
+                selectedSkills.includes("Cloud")
+            ) {
+
+                careerSuggestions.push(
+                    "☁️ Cloud / IT Support"
+                );
+
+            }
+
+
+            if (
+                selectedSkills.includes("Python") &&
+                selectedSkills.includes("SQL")
+            ) {
+
+                careerSuggestions.push(
+                    "📊 Data Analyst"
+                );
+
+            }
+
+
+            if (careerSuggestions.length === 0) {
+
+                careerSuggestions.push(
+                    "📚 Explore beginner-level IT and programming roles"
+                );
+
+            }
+
+
+            let careerSuggestionsHTML = "";
+
+
+            careerSuggestions.forEach(function (career) {
+
+                careerSuggestionsHTML +=
+                    `<div class="recommendation-item">
+
+                        <strong>${career}</strong>
+
+                        <p>
+                            This career area matches some of the skills
+                            selected in your assessment.
+                        </p>
+
+                    </div>`;
+
+            });
+
+
+            const recommendations = {
+
+                HTML:
+                    "Learn HTML structure, forms, semantic elements and accessibility.",
+
+                CSS:
+                    "Practice layouts, Flexbox, Grid, responsive design and animations.",
+
+                JavaScript:
+                    "Learn variables, functions, DOM manipulation and events.",
+
+                Python:
+                    "Practice Python fundamentals, functions, lists, dictionaries and projects.",
+
+                Java:
+                    "Learn object-oriented programming, classes, inheritance and exception handling.",
+
+                SQL:
+                    "Practice SELECT queries, joins, filtering, grouping and database operations.",
+
+                PHP:
+                    "Learn PHP syntax, forms, sessions and database connectivity.",
+
+                Git:
+                    "Learn Git commands, GitHub repositories, branching and version control.",
+
+                Database:
+                    "Learn database concepts, tables, relationships and normalization.",
+
+                Cloud:
+                    "Learn cloud computing concepts, services, deployment and basic cloud platforms."
+
+            };
+
+
+            const interviewQuestions = {
+
+                HTML:
+                    "What is the difference between HTML and HTML5?",
+
+                CSS:
+                    "What is the difference between Flexbox and CSS Grid?",
+
+                JavaScript:
+                    "What is the difference between let, const and var?",
+
+                Python:
+                    "What are the main features of Python?",
+
+                Java:
+                    "What are the main principles of object-oriented programming?",
+
+                SQL:
+                    "What is the difference between WHERE and HAVING?",
+
+                PHP:
+                    "What is PHP and where is it commonly used?",
+
+                Git:
+                    "What is Git and why is version control important?",
+
+                Database:
+                    "What is a database and why is it used?",
+
+                Cloud:
+                    "What is cloud computing?"
+
+            };
+
+
+            const result =
+                document.getElementById("result");
+
+
+            let knownSkillsHTML = "";
+
+
+            if (selectedSkills.length > 0) {
+
+                selectedSkills.forEach(function (skill) {
+
+                    knownSkillsHTML +=
+                        `<span class="skill-tag known">
+                            ${skill}
+                        </span>`;
+
+                });
+
+            } else {
+
+                knownSkillsHTML =
+                    "<p>No skills selected yet.</p>";
+
+            }
+
+
+            let missingSkillsHTML = "";
+
+
+            if (missingSkills.length > 0) {
+
+                missingSkills.forEach(function (skill) {
+
+                    missingSkillsHTML +=
+                        `<span class="skill-tag improve">
+                            ${skill}
+                        </span>`;
+
+                });
+
+            } else {
+
+                missingSkillsHTML =
+                    "<p>Great! You selected all available skills.</p>";
+
+            }
+
+
+            let recommendationHTML = "";
+
+
+            missingSkills.forEach(function (skill) {
+
+                recommendationHTML +=
+                    `<div class="recommendation-item">
+
+                        <strong>${skill}</strong>
+
+                        <p>
+                            ${recommendations[skill]}
+                        </p>
+
+                    </div>`;
+
+            });
+
+
+            if (missingSkills.length === 0) {
+
+                recommendationHTML =
+                    `<div class="recommendation-item">
+
+                        <strong>Excellent!</strong>
+
+                        <p>
+                            Continue practicing these skills through
+                            real-world projects.
+                        </p>
+
+                    </div>`;
+
+            }
+
+
+            let interviewHTML = "";
+
+
+            selectedSkills.forEach(function (skill) {
+
+                interviewHTML +=
+                    `<div class="interview-item">
+
+                        <strong>${skill}</strong>
+
+                        <p>
+                            ${interviewQuestions[skill]}
+                        </p>
+
+                    </div>`;
+
+            });
+
+
+            if (selectedSkills.length === 0) {
+
+                interviewHTML =
+                    `<div class="interview-item">
+
+                        <p>
+                            Select some skills to receive interview questions.
+                        </p>
+
+                    </div>`;
+
+            }
+
+
+            let progressHTML = "";
+
+
+            selectedSkills.forEach(function (skill) {
+
+                progressHTML +=
+                    `<div class="skill-progress-item">
+
+                        <strong>${skill}</strong>
+
+                        <div class="score-bar">
+
+                            <div
+                                class="score-progress"
+                                style="width: 100%;">
+                            </div>
+
+                        </div>
+
+                        <span>100%</span>
+
+                    </div>`;
+
+            });
+
+
+            if (selectedSkills.length === 0) {
+
+                progressHTML =
+                    "<p>No selected skills to display.</p>";
+
+            }
+
+
+            result.innerHTML = `
+
+                <h2>📊 Your Skill Report</h2>
+
+
+                <div class="report-card">
+
+                    <h3>Student Details</h3>
+
+                    <p>
+                        <strong>Name:</strong>
+                        ${studentName}
+                    </p>
+
+                    <p>
+                        <strong>Course:</strong>
+                        ${studentCourse}
+                    </p>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <h3>Job Readiness Score</h3>
+
+                    <h2>${score}%</h2>
+
+                    <div class="score-bar">
+
+                        <div
+                            class="score-progress"
+                            style="width: ${score}%;">
+                        </div>
+
+                    </div>
+
+                    <h3>Skill Level</h3>
+
+                    <p>
+                        <strong>${level}</strong>
+                    </p>
+
+                    <p>
+                        ${readinessMessage}
+                    </p>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <h3>💼 Career Recommendation</h3>
+
+                    <p>
+                        ${careerRecommendation}
+                    </p>
+
+                </div>
+
+
+                <!-- Career Suggestions -->
+
+                <div class="report-card">
+
+                    <h3>🚀 Career Suggestions</h3>
+
+                    ${careerSuggestionsHTML}
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <h3>📈 Your Skill Progress</h3>
+
+                    ${progressHTML}
+
+                </div>
+
+
+                <div class="report-grid">
+
+                    <div class="report-card known-card">
+
+                        <h3>🟢 Skills You Know</h3>
+
+                        <div class="skill-tags">
+
+                            ${knownSkillsHTML}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-card improve-card">
+
+                        <h3>🟠 Skills To Improve</h3>
+
+                        <div class="skill-tags">
+
+                            ${missingSkillsHTML}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <h3>📚 Learning Recommendations</h3>
+
+                    ${recommendationHTML}
+
+                </div>
+
+
+                <div class="report-card">
+
+                    <h3>🎤 Interview Preparation</h3>
+
+                    ${interviewHTML}
+
+                </div>
+
+            `;
+
+
+            // PDF DOWNLOAD BUTTON
+
+            const downloadButton =
+                document.createElement("button");
+
+
+            downloadButton.innerText =
+                "📥 Download PDF Report";
+
+
+            downloadButton.onclick = function () {
+
+                const reportContent =
+                    result.innerHTML;
+
+
+                const reportWindow =
+                    window.open("", "_blank");
+
+
+                const currentDate =
+                    new Date().toLocaleDateString();
+
+
+                reportWindow.document.write(`
+
+                    <!DOCTYPE html>
+
+                    <html>
+
+                    <head>
+
+                        <title>
+                            SkillReady - Job Readiness Report
+                        </title>
+
+
+                        <style>
+
+                            body {
+
+                                font-family: Arial, sans-serif;
+
+                                padding: 40px;
+
+                                line-height: 1.6;
+
+                                color: #222;
+
+                            }
+
+
+                            h1 {
+
+                                text-align: center;
+
+                                color: #4f46e5;
+
+                                margin-bottom: 30px;
+
+                            }
+
+
+                            h2,
+                            h3 {
+
+                                color: #4f46e5;
+
+                            }
+
+
+                            .student-details {
+
+                                border: 1px solid #ddd;
+
+                                padding: 20px;
+
+                                margin-bottom: 30px;
+
+                                border-radius: 10px;
+
+                                background: #f8f9ff;
+
+                            }
+
+
+                            .student-details p {
+
+                                margin: 8px 0;
+
+                            }
+
+
+                            .report-card {
+
+                                padding: 20px;
+
+                                margin: 20px 0;
+
+                                border: 1px solid #ddd;
+
+                                border-radius: 10px;
+
+                            }
+
+
+                            .skill-tag {
+
+                                display: inline-block;
+
+                                padding: 8px 12px;
+
+                                margin: 5px;
+
+                                border-radius: 15px;
+
+                                background: #eef2ff;
+
+                            }
+
+
+                            .score-bar {
+
+                                width: 100%;
+
+                                height: 18px;
+
+                                background: #e5e7eb;
+
+                                border-radius: 20px;
+
+                            }
+
+
+                            .score-progress {
+
+                                height: 18px;
+
+                                background: #4f46e5;
+
+                                border-radius: 20px;
+
+                            }
+
+
+                            .recommendation-item,
+                            .interview-item {
+
+                                padding: 12px;
+
+                                margin: 10px 0;
+
+                                background: #f5f7ff;
+
+                                border-radius: 8px;
+
+                            }
+
+
+                            @media print {
+
+                                body {
+
+                                    padding: 20px;
+
+                                }
+
+                            }
+
+                        </style>
+
+                    </head>
+
+
+                    <body>
+
+                        <h1>
+                            SkillReady - Job Readiness Report
+                        </h1>
+
+
+                        <div class="student-details">
+
+                            <p>
+
+                                <strong>
+                                    Student Name:
+                                </strong>
+
+                                ${studentName}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Course:
+                                </strong>
+
+                                ${studentCourse}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Project:
+                                </strong>
+
+                                Job Readiness & Skill Gap Analyzer
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Date:
+                                </strong>
+
+                                ${currentDate}
+
+                            </p>
+
+                        </div>
+
+
+                        ${reportContent}
+
+                    </body>
+
+                    </html>
+
+                `);
+
+
+                reportWindow.document.close();
+
+
+                setTimeout(function () {
+
+                    reportWindow.print();
+
+                }, 500);
+
+            };
+
+
+            result.appendChild(downloadButton);
+
+
+            result.scrollIntoView({
+
+                behavior: "smooth"
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
